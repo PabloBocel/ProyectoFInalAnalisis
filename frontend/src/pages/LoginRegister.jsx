@@ -4,7 +4,7 @@ import './LoginRegister.css';
 import { useNavigate } from 'react-router-dom';
 
 export default function LoginRegister() {
-  const navigate = useNavigate(); // 🔄 Aquí va
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -29,7 +29,7 @@ export default function LoginRegister() {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
+    <div className="login-container">
       <h2>Login / Registro</h2>
       <input
         type="email"
@@ -37,14 +37,12 @@ export default function LoginRegister() {
         value={email}
         onChange={e => setEmail(e.target.value)}
       />
-      <br />
       <input
         type="password"
         placeholder="Contraseña"
         value={password}
         onChange={e => setPassword(e.target.value)}
       />
-      <br />
       <button onClick={handleRegister}>Registrarse</button>
       <button onClick={handleLogin}>Iniciar sesión</button>
     </div>
