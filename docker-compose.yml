@@ -17,3 +17,9 @@ services:
       - CHOKIDAR_USEPOLLING=true
     depends_on:
       - auth-service
+      
+  talleres-service:
+    build: ./talleres-service
+    ports:
+      - "5002:5002"
+    restart: always

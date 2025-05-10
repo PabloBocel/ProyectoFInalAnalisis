@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { register, login } from '../services/auth';
+import './LoginRegister.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginRegister() {
+  const navigate = useNavigate(); // 🔄 Aquí va
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -9,6 +12,7 @@ export default function LoginRegister() {
     try {
       const res = await register(email, password);
       alert(`✔️ ${res.data.message}`);
+      // navigate('/inicio'); // Si quieres redirigir también al registrarse
     } catch (err) {
       alert(`❌ ${err.response?.data?.error || 'Error al registrar'}`);
     }
@@ -18,6 +22,7 @@ export default function LoginRegister() {
     try {
       const res = await login(email, password);
       alert(`🔓 ${res.data.message}`);
+      navigate('/inicio'); // Redirige a la página principal
     } catch (err) {
       alert(`❌ ${err.response?.data?.error || 'Error al iniciar sesión'}`);
     }

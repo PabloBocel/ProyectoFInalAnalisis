@@ -1,10 +1,15 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginRegister from './pages/LoginRegister';
+import PaginaPrincipal from './pages/PaginaPrincipal';
 
 function App() {
   return (
-    <div className="App">
-      <LoginRegister />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoginRegister />} />
+        <Route path="/inicio" element={<PaginaPrincipal />} />
+      </Routes>
+    </Router>
   );
 }
 
