@@ -1,43 +1,216 @@
-.pagina-container {
-  padding: 2rem;
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #FAFAFA;
   font-family: sans-serif;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
-select {
-  padding: 0.5rem;
-  margin-bottom: 1rem;
+.pagina-principal {
+  width: 100vw;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.header-principal {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #FFF3E2;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #eee;
+  box-sizing: border-box;
+}
+
+.perfil-nav button {
+  margin-left: 1rem;
+  background: none;
+  border: none;
+  color: #6B8E23;
+  cursor: pointer;
   font-size: 1rem;
 }
 
-.talleres-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
+.categorias-menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem;
+  margin: 1.5rem 0 1rem;
+  width: 100%;
 }
 
-.taller-card {
-  border: 1px solid #ddd;
-  border-radius: 0.75rem;
-  padding: 1rem;
-  background-color: #fff3e2;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.taller-card h3 {
-  color: #d94f4f;
-  margin-bottom: 0.5rem;
-}
-
-.taller-card p {
-  margin: 0.25rem 0;
-}
-
-.taller-card button {
-  margin-top: 1rem;
+.categoria-btn {
   padding: 0.5rem 1rem;
-  background-color: #6b8e23;
+  background: #FFF3E2;
+  border: 1px solid #6B8E23;
+  border-radius: 20px;
+  color: #6B8E23;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.categoria-btn.activa,
+.categoria-btn:hover {
+  background: #6B8E23;
+  color: white;
+}
+
+.filtros-bar {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+.filtros-bar .ordenadores {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.filtros-bar input[type="text"] {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+}
+
+.filtros-bar select {
+  padding: 0.5rem 1rem;
+  background: #FFF3E2;
+  border: 1px solid #6B8E23;
+  border-radius: 20px;
+  color: #6B8E23;
+  cursor: pointer;
+  width: auto;
+}
+
+.talleres-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.card-taller {
+  background: white;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-taller img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.contenido {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.contenido h3 {
+  color: #D94F4F;
+  margin: 0;
+}
+
+.descripcion {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #333;
+}
+
+.categoria {
+  font-size: 0.8rem;
+  background: #FFF3E2;
+  color: #6B8E23;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.5rem;
+  width: fit-content;
+}
+
+.btn-detalles {
+  align-self: flex-end;
+  background: #D94F4F;
   color: white;
   border: none;
+  padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.footer {
+  text-align: center;
+  background: #FFF3E2;
+  padding: 2rem;
+  margin-top: 4rem;
+  width: 100%;
+}
+
+.footer img {
+  height: 60px;
+  margin-bottom: 1rem;
+}
+.header-principal {
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #FFF3E2;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #eee;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+.header-principal h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #D94F4F;
+}
+
+.perfil-nav button {
+  margin-left: 1rem;
+  background: none;
+  border: none;
+  color: #6B8E23;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.precio {
+  font-size: 0.9rem;
+  color: #333;
+  margin-top: 0.3rem;
 }

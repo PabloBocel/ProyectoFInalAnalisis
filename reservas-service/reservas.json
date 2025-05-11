@@ -1,0 +1,9 @@
+[
+  {
+    "id": 1,
+    "usuario": "test@email.com",
+    "taller_id": 2,
+    "estado": "confirmada",
+    "pagado": false
+  }
+]
