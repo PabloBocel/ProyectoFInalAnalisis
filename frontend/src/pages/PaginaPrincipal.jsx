@@ -63,10 +63,12 @@ export default function PaginaPrincipal() {
       <header className="header-principal">
         <h1>MasterCook Academy</h1>
         <div className="perfil-nav">
+          <button onClick={() => navigate('/mis-reservas')}>📋 Mis Reservas</button>
           <button onClick={() => navigate('/perfil')}>👤 Perfil</button>
           <button onClick={() => navigate('/')}>🚪 Cerrar sesión</button>
         </div>
       </header>
+      <div className="espaciador-header" />
       <div className="pagina-principal">
       <div className="categorias-menu">
         {categorias.map((cat) => (

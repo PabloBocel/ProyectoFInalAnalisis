@@ -51,5 +51,16 @@ def cancelar_reserva(id):
             return jsonify({"mensaje": "Reserva cancelada"})
     return jsonify({"error": "Reserva no encontrada"}), 404
 
+@app.route('/reservas/<int:id>/pagar', methods=['PUT'])
+def pagar_reserva(id):
+    reservas = leer_reservas()
+    for r in reservas:
+        if r['id'] == id:
+            r['pagado'] = True
+            guardar_reservas(reservas)
+            return jsonify({"mensaje": "Pago simulado"})
+    return jsonify({"error": "Reserva no encontrada"}), 404
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5003)

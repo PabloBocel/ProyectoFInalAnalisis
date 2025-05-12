@@ -10,6 +10,7 @@ html, body {
 }
 
 .pagina-principal {
+  margin-top: 100px;
   width: 100vw;
   min-height: 100vh;
   padding: 2rem 1rem;
@@ -18,26 +19,6 @@ html, body {
   flex-direction: column;
   align-items: center;
   margin-top: 100px;
-}
-
-.header-principal {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #FFF3E2;
-  padding: 1rem 2rem;
-  border-bottom: 1px solid #eee;
-  box-sizing: border-box;
-}
-
-.perfil-nav button {
-  margin-left: 1rem;
-  background: none;
-  border: none;
-  color: #6B8E23;
-  cursor: pointer;
-  font-size: 1rem;
 }
 
 .categorias-menu {
@@ -200,6 +181,12 @@ html, body {
   color: #D94F4F;
 }
 
+.precio {
+  font-size: 0.9rem;
+  color: #333;
+  margin-top: 0.3rem;
+}
+
 .perfil-nav button {
   margin-left: 1rem;
   background: none;
@@ -209,8 +196,6 @@ html, body {
   font-size: 1rem;
 }
 
-.precio {
-  font-size: 0.9rem;
-  color: #333;
-  margin-top: 0.3rem;
+.espaciador-header{
+  height: 100px;;
 }

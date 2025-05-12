@@ -29,3 +29,9 @@ services:
     ports:
       - "5003:5003"
     restart: always
+
+  pagos-mock-service:
+    build: ./pagos-mock-service
+    ports:
+      - "5004:5000"
+    restart: always
