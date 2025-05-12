@@ -1,0 +1,59 @@
+html, body {
+  background-color: #FAF1E6;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.perfil-container {
+  max-width: 600px;
+  margin: 120px auto 2rem;
+  background: #FFFFFF;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.perfil-container h2 {
+  color: #D94F4F;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.perfil-container label {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  color: #2E2E2E;
+}
+
+.perfil-container input,
+.perfil-container select {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  background-color: #F9EEDB;
+}
+
+.perfil-container button {
+  background-color: #D94F4F;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  display: block;
+  margin: 1.5rem auto 0;
+}
+
+.guardado {
+  color: green;
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.espaciador-header {
+  height: 100px;
+}
