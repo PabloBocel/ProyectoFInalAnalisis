@@ -26,7 +26,7 @@ export default function LandingPage() {
     <p>Descubre el arte de cocinar con pasión.</p>
     <div className="hero-buttons">
       <button onClick={() => navigate('/login')}>Iniciar sesión</button>
-      <button onClick={() => navigate('/login')}>Registrarse</button>
+      <button onClick={() => navigate('/Register')}>Registrarse</button>
     </div>
   </div>
 </section>

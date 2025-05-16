@@ -1,0 +1,154 @@
+:root {
+  --color-primario: #D94F4F;
+  --color-secundario: #FFF3E2;
+  --color-acento: #6B8E23;
+  --texto-principal: #333333;
+  --texto-secundario: #666666;
+  --fondo-claro: #FAFAFA;
+}
+
+/* 🔥 NUEVO: asegura que la pantalla esté al 100% */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.login-screen {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.login-left {
+  width: 50%;
+  background-color: var(--color-secundario);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-image: url('/fondo-izquierda.svg');
+  background-size: cover;
+}
+
+.form-wrapper {
+  background-color: var(--fondo-claro);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 320px;
+}
+
+.icon-user {
+  font-size: 36px;
+  text-align: center;
+  color: var(--color-acento);
+}
+
+input {
+  padding: 12px;
+  font-size: 15px;
+  border: 2px solid var(--color-primario);
+  border-radius: 6px;
+  outline: none;
+  color: var(--texto-principal);
+}
+
+.btn-login {
+  background-color: var(--color-primario);
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-login:hover {
+  background-color: #b93d3d;
+}
+
+.no-cuenta {
+  text-align: center;
+  font-size: 14px;
+  color: var(--texto-secundario);
+  margin: 0;
+}
+
+.registro-link {
+  text-align: center;
+  display: block;
+  font-weight: bold;
+  color: var(--color-primario);
+  text-decoration: none;
+}
+
+.login-right {
+  width: 50%;
+  background-color: var(--color-secundario);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url('/fondo-derecha.svg');
+  background-size: cover;
+  position: relative; /* Necesario para posicionar la onda */
+}
+
+.logo-img {
+  width: 90px;
+  margin-bottom: 20px;
+}
+
+.titulo-logo {
+  color: var(--texto-principal);
+  font-size: 32px;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.titulo-logo span {
+  font-size: 24px;
+  color: var(--color-acento);
+}
+
+/* 🌀 Onda decorativa SVG para login */
+.custom-shape-divider-bottom-1747431304 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+  z-index: 0;
+}
+
+.custom-shape-divider-bottom-1747431304 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 188px;
+}
+
+.custom-shape-divider-bottom-1747431304 .shape-fill {
+  fill: #D94F4F;
+}
+
+@media (max-width: 768px) {
+  .login-screen {
+    flex-direction: column;
+  }
+
+  .login-left, .login-right {
+    width: 100%;
+    height: 50vh;
+  }
+}

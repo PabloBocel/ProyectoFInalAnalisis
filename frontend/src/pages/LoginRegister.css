@@ -1,37 +1,114 @@
-.login-container {
-  max-width: 400px;
-  margin: 5rem auto;
-  padding: 2rem;
-  background-color: #fff;
-  border-radius: 1rem;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  font-family: sans-serif;
+@import url('./Login.css'); /* Reutiliza colores con :root */
+
+.registro-screen {
+  display: flex;
+  height: 100vh;
+  background-color: var(--color-secundario);
 }
 
-.login-container h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
+.registro-form {
+  width: 50%;
+  background-color: var(--color-secundario);
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
-.login-container input {
-  width: 100%;
-  padding: 0.75rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 0.5rem;
+.registro-icon {
+  font-size: 40px;
+  color: var(--color-acento);
+  margin-bottom: 10px;
 }
 
-.login-container button {
-  width: 48%;
-  padding: 0.75rem;
-  margin-right: 4%;
-  border: none;
-  background-color: #6B8E23;
+.registro-form h2 {
+  color: var(--color-primario);
+  margin-bottom: 20px;
+}
+
+.registro-form input {
+  width: 300px;
+  padding: 10px;
+  border: 2px solid var(--color-primario);
+  border-radius: 6px;
+}
+
+.registro-form label {
+  font-weight: bold;
+  color: var(--texto-principal);
+  width: 300px;
+  text-align: left;
+  margin-top: 10px;
+}
+
+.btn-registrar {
+  background-color: var(--color-primario);
   color: white;
-  border-radius: 0.5rem;
+  padding: 12px;
+  width: 300px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  margin-top: 20px;
   cursor: pointer;
 }
 
-.login-container button:last-child {
-  background-color: #D94F4F;
+.registro-lateral {
+  width: 50%;
+  background-color: var(--color-secundario);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  position: relative;
+}
+
+.logo-img {
+  width: 90px;
+}
+
+.titulo-logo {
+  color: var(--texto-principal);
+  font-size: 32px;
+  text-align: center;
+}
+
+.titulo-logo span {
+  color: var(--color-acento);
+  font-size: 24px;
+}
+
+/* Onda decorativa */
+.custom-shape-divider-bottom-1747431304 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1747431304 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 188px;
+}
+
+.custom-shape-divider-bottom-1747431304 .shape-fill {
+  fill: #D94F4F;
+}
+@media (max-width: 768px) {
+  .login-screen {
+    flex-direction: column;
+  }
+
+  html, body {
+  height: 100%;
+  width: 100%;
+}
 }
