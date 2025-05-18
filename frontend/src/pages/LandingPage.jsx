@@ -25,7 +25,7 @@ export default function LandingPage() {
     <h1>MasterCook Academy</h1>
     <p>Descubre el arte de cocinar con pasión.</p>
     <div className="hero-buttons">
-      <button onClick={() => navigate('/login')}>Iniciar sesión</button>
+      <button onClick={() => navigate('/Login')}>Iniciar sesión</button>
       <button onClick={() => navigate('/Register')}>Registrarse</button>
     </div>
   </div>

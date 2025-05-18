@@ -7,89 +7,106 @@
   --fondo-claro: #FAFAFA;
 }
 
-/* 🔥 NUEVO: asegura que la pantalla esté al 100% */
 html, body, #root {
-  margin: 0;
-  padding: 0;
   height: 100%;
   width: 100%;
+  margin: 0;
   font-family: 'Segoe UI', sans-serif;
+  background-color: var(--color-secundario);
 }
 
 .login-screen {
   display: flex;
   height: 100vh;
   width: 100vw;
+  position: relative;
   overflow: hidden;
 }
 
+/* Lado izquierdo */
 .login-left {
   width: 50%;
-  background-color: var(--color-secundario);
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  background-image: url('/fondo-izquierda.svg');
-  background-size: cover;
+  animation: fadeInLeft 1s ease-in-out;
 }
 
-.form-wrapper {
+.login-form {
   background-color: var(--fondo-claro);
   padding: 40px;
   border-radius: 16px;
-  box-shadow: 0 0 20px rgb(255, 255, 255);
+  box-shadow: 0 0 20px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
   width: 320px;
 }
 
-.icon-user {
-  font-size: 36px;
-  text-align: center;
+.login-icon {
+  font-size: 40px;
   color: var(--color-acento);
+  text-align: center;
+  margin-bottom: 10px;
 }
 
-input {
-  padding: 12px;
-  font-size: 15px;
+.login-form h2 {
+  color: var(--color-primario);
+  margin-bottom: 10px;
+  animation: fadeInDown 0.7s ease-in-out;
+}
+
+.login-form label {
+  font-weight: bold;
+  color: var(--texto-principal);
+  text-align: left;
+}
+
+.login-form input {
+  padding: 10px;
   border: 2px solid var(--color-primario);
   border-radius: 6px;
-  outline: none;
-  color: var(--texto-principal);
+  background-color: #333333;
+  color: white;
+}
+
+.login-form input::placeholder {
+  color: var(--texto-secundario);
+}
+
+/* Botones */
+.btn-login, .btn-volver {
+  padding: 12px;
+  font-weight: bold;
+  border-radius: 6px;
+  margin-top: 10px;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.3s ease;
 }
 
 .btn-login {
   background-color: var(--color-primario);
   color: white;
-  font-weight: bold;
   border: none;
-  padding: 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.3s;
 }
 
 .btn-login:hover {
   background-color: #b93d3d;
 }
 
-.no-cuenta {
-  text-align: center;
-  font-size: 14px;
-  color: var(--texto-secundario);
-  margin: 0;
+.btn-volver {
+  background-color: transparent;
+  border: 2px solid var(--color-primario);
+  color: var(--texto-principal);
 }
 
-.registro-link {
-  text-align: center;
-  display: block;
-  font-weight: bold;
-  color: var(--color-primario);
-  text-decoration: none;
+.btn-volver:hover {
+  background-color: var(--color-primario);
+  color: white;
 }
 
+/* Lado derecho */
 .login-right {
   width: 50%;
   background-color: var(--color-secundario);
@@ -97,13 +114,11 @@ input {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: url('/fondo-derecha.svg');
-  background-size: cover;
-  position: relative; /* Necesario para posicionar la onda */
+  animation: fadeInRight 1s ease-in-out;
 }
 
 .logo-img {
-  width: 90px;
+  width: 140px;
   margin-bottom: 20px;
 }
 
@@ -119,7 +134,7 @@ input {
   color: var(--color-acento);
 }
 
-/* 🌀 Onda decorativa SVG para login */
+/* Onda */
 .custom-shape-divider-bottom-1747431304 {
   position: absolute;
   bottom: 0;
@@ -134,7 +149,7 @@ input {
 .custom-shape-divider-bottom-1747431304 svg {
   position: relative;
   display: block;
-  width: calc(100% + 1.3px);
+  width: 100%;
   height: 188px;
 }
 
@@ -142,6 +157,23 @@ input {
   fill: #D94F4F;
 }
 
+/* Animaciones */
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
 @media (max-width: 768px) {
   .login-screen {
     flex-direction: column;
@@ -151,4 +183,21 @@ input {
     width: 100%;
     height: 50vh;
   }
+
+  .login-form {
+    width: 90%;
+  }
+}
+
+.no-cuenta {
+  text-align: center;
+  font-size: 14px;
+  color: var(--texto-secundario);
+  margin: 0;
+}
+
+.registro-link {
+  font-weight: bold;
+  color: var(--color-primario);
+  text-decoration: none;
 }

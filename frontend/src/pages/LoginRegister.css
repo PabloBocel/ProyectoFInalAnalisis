@@ -1,87 +1,140 @@
-@import url('./Login.css'); /* Reutiliza colores con :root */
+:root {
+  --color-primario: #D94F4F;
+  --color-secundario: #FFF3E2;
+  --color-acento: #6B8E23;
+  --texto-principal: #333333;
+  --texto-secundario: #666666;
+  --fondo-claro: #FAFAFA;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--color-secundario);
+}
 
 .registro-screen {
   display: flex;
   height: 100vh;
-  background-color: var(--color-secundario);
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+}
+
+.registro-left {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeInLeft 1s ease-in-out;
 }
 
 .registro-form {
-  width: 50%;
-  background-color: var(--color-secundario);
-  padding: 50px;
+  background-color: var(--fondo-claro);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   gap: 10px;
+  width: 320px;
+  z-index: 1;
+  position: relative;
 }
 
 .registro-icon {
   font-size: 40px;
   color: var(--color-acento);
+  text-align: center;
   margin-bottom: 10px;
 }
 
 .registro-form h2 {
   color: var(--color-primario);
-  margin-bottom: 20px;
-}
-
-.registro-form input {
-  width: 300px;
-  padding: 10px;
-  border: 2px solid var(--color-primario);
-  border-radius: 6px;
+  margin-bottom: 10px;
+  animation: fadeInDown 0.7s ease-in-out;
 }
 
 .registro-form label {
   font-weight: bold;
   color: var(--texto-principal);
-  width: 300px;
   text-align: left;
+}
+
+.registro-form input {
+  padding: 10px;
+  border: 2px solid var(--color-primario);
+  border-radius: 6px;
+  background-color: #333333;
+  color: white;
+}
+
+.registro-form input::placeholder {
+  color: var(--texto-secundario);
+}
+
+.btn-registrar, .btn-volver {
+  padding: 12px;
+  font-weight: bold;
+  border-radius: 6px;
   margin-top: 10px;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.3s ease;
 }
 
 .btn-registrar {
   background-color: var(--color-primario);
   color: white;
-  padding: 12px;
-  width: 300px;
-  font-weight: bold;
   border: none;
-  border-radius: 6px;
-  margin-top: 20px;
-  cursor: pointer;
 }
 
-.registro-lateral {
+.btn-registrar:hover {
+  background-color: #b93d3d;
+}
+
+.btn-volver {
+  background-color: transparent;
+  border: 2px solid var(--color-primario);
+  color: var(--texto-principal);
+}
+
+.btn-volver:hover {
+  background-color: var(--color-primario);
+  color: white;
+}
+
+.registro-right {
   width: 50%;
   background-color: var(--color-secundario);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-size: cover;
-  position: relative;
+  animation: fadeInRight 1s ease-in-out;
 }
 
 .logo-img {
   width: 90px;
+  margin-bottom: 20px;
 }
 
 .titulo-logo {
   color: var(--texto-principal);
   font-size: 32px;
   text-align: center;
+  line-height: 1.2;
 }
 
 .titulo-logo span {
-  color: var(--color-acento);
   font-size: 24px;
+  color: var(--color-acento);
 }
 
-/* Onda decorativa */
+/* Onda */
 .custom-shape-divider-bottom-1747431304 {
   position: absolute;
   bottom: 0;
@@ -90,25 +143,47 @@
   overflow: hidden;
   line-height: 0;
   transform: rotate(180deg);
+  z-index: -1;
 }
 
 .custom-shape-divider-bottom-1747431304 svg {
   position: relative;
   display: block;
-  width: calc(100% + 1.3px);
+  width: 100%;
   height: 188px;
 }
 
 .custom-shape-divider-bottom-1747431304 .shape-fill {
   fill: #D94F4F;
 }
+
+/* Animaciones */
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @media (max-width: 768px) {
-  .login-screen {
+  .registro-screen {
     flex-direction: column;
   }
 
-  html, body {
-  height: 100%;
-  width: 100%;
-}
+  .registro-left, .registro-right {
+    width: 100%;
+    height: 50vh;
+  }
+
+  .registro-form {
+    width: 90%;
+  }
 }

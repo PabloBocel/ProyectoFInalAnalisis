@@ -21,46 +21,56 @@ export default function Login() {
   return (
     <div className="login-screen">
       <div className="login-left">
-        <div className="form-wrapper">
-          <div className="icon-user">👤</div>
+        <form className="login-form" onSubmit={(e) => e.preventDefault()}>
+          <div className="login-icon">👤</div>
+          <h2>INICIAR SESIÓN</h2>
+
+          <label>Correo</label>
           <input
             type="email"
             placeholder="CORREO"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+
+          <label>Contraseña</label>
           <input
             type="password"
             placeholder="CONTRASEÑA"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+
           <button className="btn-login" onClick={handleLogin}>INICIAR SESIÓN</button>
-          <p className="no-cuenta">¿Aún no tienes cuenta?</p>
-          <a className="registro-link" href="/registro">REGÍSTRATE ✔️</a>
-        </div>
+          <button className="btn-volver" onClick={() => navigate('/')}>⬅ VOLVER AL MENÚ</button>
+          <p className="no-cuenta">¿No tienes una cuenta?</p>
+          <button className="btn-volver" onClick={() => navigate('/registro')}>
+            👉 REGÍSTRATE AQUÍ
+          </button>
+        </form>
       </div>
-            <div className="login-right">
-                <img src="/logo-mc.png" alt="Logo MasterCook" className="logo-img" />
-                <h1 className="titulo-logo">
-                MASTERCOOK<br /><span>ACADEMY</span>
-                </h1>
-            </div>
-            <div className="custom-shape-divider-bottom-1747431304">
+
+      <div className="login-right">
+        <img src="/Logo_Mastercook.png" alt="Logo MasterCook" className="logo-img" />
+        <h1 className="titulo-logo">
+          MASTERCOOK<br /><span>ACADEMY</span>
+        </h1>
+      </div>
+
+      {/* Onda decorativa al fondo */}
+      <div className="custom-shape-divider-bottom-1747431304">
         <svg
-            data-name="Layer 1"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1200 120"
-            preserveAspectRatio="none"
+          data-name="Layer 1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
         >
-            <path
+          <path
             d="M321.39,56.44C197.78,82.3,91.13,95.09,0,87.75V0H1200V27.35c-114.41,31.87-218.16,41.65-320.57,42.5C747.89,71.12,631.43,48.13,495.58,52.94,439.18,55.14,382.39,64,321.39,56.44Z"
             className="shape-fill"
-            ></path>
+          ></path>
         </svg>
-        </div>
-
+      </div>
     </div>
-    
   );
 }

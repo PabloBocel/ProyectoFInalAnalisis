@@ -14,18 +14,21 @@ def register():
     email = data.get("email")
     password = data.get("password")
 
-    if not nombre or not email or not password:
+    if not all([nombre and nombre.strip(), email and email.strip(), password and password.strip()]):
         return jsonify({"error": "Faltan campos obligatorios"}), 400
+
+    email = email.strip().lower()
 
     if email in users:
         return jsonify({"error": "Usuario ya registrado"}), 400
 
     users[email] = {
-        "nombre": nombre,
-        "password": password
+        "nombre": nombre.strip(),
+        "password": password.strip()
     }
 
-    return jsonify({"message": f"Usuario {nombre} registrado con éxito"}), 201
+    return jsonify({"message": f"Usuario {nombre.strip()} registrado con éxito"}), 201
+
 
 @app.route("/login", methods=["POST"])
 def login():
