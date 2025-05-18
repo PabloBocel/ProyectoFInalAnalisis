@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { login } from '../services/auth';
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -11,10 +12,13 @@ export default function Login() {
   const handleLogin = async () => {
     try {
       const res = await login(email, password);
-      alert(`🔓 ${res.data.message}`);
+      toast.error(`🔓 ${res.data.message}`, {icon: '✅',
+    style: {
+    background: '#E6F4EA',
+    color: '#2E7D32'}});
       navigate('/inicio');
     } catch (err) {
-      alert(`❌ ${err.response?.data?.error || 'Error al iniciar sesión'}`);
+      toast.error(`❌ ${err.response?.data?.error || 'Error al iniciar sesión'}`);
     }
   };
 

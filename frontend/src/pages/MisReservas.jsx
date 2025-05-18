@@ -3,6 +3,7 @@ import { getReservas, cancelarReserva, pagarReserva } from '../services/reservas
 import { getTalleres } from '../services/talleres';
 import './MisReservas.css';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export default function MisReservas() {
   const [reservas, setReservas] = useState([]);
@@ -24,17 +25,17 @@ export default function MisReservas() {
 
 
   useEffect(() => {
-    Promise.all([getReservas(email), getTalleres()])
-      .then(([res, talls]) => {
-        setReservas(res);
-        setTalleres(talls);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error('Error al cargar', err);
-        setLoading(false);
-      });
-  }, []);
+  Promise.all([getReservas(email), getTalleres()])
+    .then(([res, talls]) => {
+      setReservas(res);
+      setTalleres(talls);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.error('Error al cargar', err);
+      setLoading(false);
+    });
+}, []);
 
   const nombreTaller = (id) => {
     const taller = talleres.find(t => t.id === id);
@@ -135,13 +136,16 @@ export default function MisReservas() {
                   const json = await res.json();
                   if (res.ok) {
                     await handlePago(reservaSeleccionada);
-                    alert("✅ " + json.mensaje + " (" + json.tipo + ")");
+                    toast.error("✅ " + json.mensaje + " (" + json.tipo + ")", {icon: '✅',
+                    style: {
+                    background: '#E6F4EA',
+                    color: '#2E7D32'}});
                     setMostrarModal(false);
                   } else {
-                    alert("❌ " + json.error);
+                    toast.error("❌ " + json.error);
                   }
                 } catch (e) {
-                  alert("Error al contactar el servicio de pagos.");
+                  toast.error("Error al contactar el servicio de pagos.");
                 }
               }}
             >

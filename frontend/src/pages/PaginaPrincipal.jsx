@@ -3,6 +3,7 @@ import { getTalleres } from '../services/talleres';
 import { useNavigate } from 'react-router-dom';
 import './PaginaPrincipal.css';
 import { crearReserva } from '../services/reservas';
+import { toast } from 'react-toastify';
 
 
 export default function PaginaPrincipal() {
@@ -11,9 +12,12 @@ export default function PaginaPrincipal() {
     try {
       const email = 'test@email.com'; // Aquí luego se usará el usuario autenticado
       const res = await crearReserva(email, tallerId);
-      alert(`✅ Reserva creada correctamente.`);
+      toast.error(`✅ Reserva creada correctamente.`, {icon: '✅',
+    style: {
+    background: '#E6F4EA',
+    color: '#2E7D32'}});
     } catch (err) {
-      alert('❌ Error al crear la reserva');
+      toast.error('❌ Error al crear la reserva');
       console.error(err);
     }
   };
@@ -133,7 +137,7 @@ export default function PaginaPrincipal() {
       )}
 
       <footer className="footer">
-        <img src="/logo-mc.png" alt="MasterCook Academy" />
+        <img src="/Logo_Mastercook.png" alt="MasterCook Academy" />
         <p>“Descubre el arte de cocinar con pasión.”</p>
       </footer>
     </div>

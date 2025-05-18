@@ -5,6 +5,8 @@ import LandingPage from './pages/LandingPage';
 import MisReservas from './pages/MisReservas';
 import Perfil from './pages/Perfil';
 import Login from './pages/Login';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -17,6 +19,7 @@ function App() {
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/login" element={<Login />} />
       </Routes>
+      <ToastContainer position="top-right" autoClose={3000} theme="colored" />
     </Router>
   );
 }

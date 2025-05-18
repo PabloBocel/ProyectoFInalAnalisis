@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { register } from '../services/auth';
 import './LoginRegister.css';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export default function LoginRegister() {
   const navigate = useNavigate();
@@ -12,33 +13,36 @@ export default function LoginRegister() {
 
   const handleRegister = async () => {
   if (!nombre || nombre.length < 2) {
-    alert('❌ El nombre debe tener al menos 2 caracteres');
+    toast.error('❌ El nombre debe tener al menos 2 caracteres');
     return;
   }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    alert('❌ Ingresa un correo válido');
+    toast.error('❌ Ingresa un correo válido');
     return;
   }
 
   if (pass1.length < 8) {
-    alert('❌ La contraseña debe tener al menos 8 caracteres');
+    toast.error('❌ La contraseña debe tener al menos 8 caracteres');
     return;
   }
 
   if (pass1 !== pass2) {
-    alert('❌ Las contraseñas no coinciden');
+    toast.error('❌ Las contraseñas no coinciden');
     return;
   }
 
   try {
     const res = await register(nombre, email, pass1);
-    alert(`✔️ ${res.data.message}`);
+    toast.error(`✔️ ${res.data.message}`, {icon: '✅',
+    style: {
+    background: '#E6F4EA',
+    color: '#2E7D32'}});
     navigate('/login');
   } catch (err) {
     console.error('💥 Error completo al registrar:', err);
-    alert(`❌ ${err.response?.data?.error || 'Error al registrar'}`);
+    toast.error(`❌ ${err.response?.data?.error || 'Error al registrar'}`);
   }
 };
 

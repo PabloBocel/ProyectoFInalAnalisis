@@ -1,66 +1,82 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import json
-import os
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import inspect
 
 app = Flask(__name__)
 CORS(app)
 
-RESERVAS_FILE = 'reservas.json'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Pokemon6+@mysql/mastercook_auth'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
-def leer_reservas():
-    if not os.path.exists(RESERVAS_FILE):
-        return []
-    with open(RESERVAS_FILE, 'r') as f:
-        return json.load(f)
+class Reserva(db.Model):
+    __tablename__ = 'reservas'
+    id = db.Column(db.Integer, primary_key=True)
+    usuario = db.Column(db.String(120), nullable=False)
+    taller_id = db.Column(db.Integer, nullable=False)
+    estado = db.Column(db.String(50), default='confirmada')
+    pagado = db.Column(db.Boolean, default=False)
 
-def guardar_reservas(data):
-    with open(RESERVAS_FILE, 'w') as f:
-        json.dump(data, f, indent=2)
+with app.app_context():
+    db.create_all()
+
+@app.route('/db-status', methods=['GET'])
+def db_status():
+    try:
+        tablas = inspect(db.engine).get_table_names()
+        return jsonify({"mensaje": "Conectado a DB", "tablas": tablas})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/reservas', methods=['GET'])
 def obtener_reservas():
     usuario = request.args.get('usuario')
-    reservas = leer_reservas()
-    if usuario:
-        reservas = [r for r in reservas if r['usuario'] == usuario]
-    return jsonify(reservas)
+    if not usuario:
+        return jsonify({"error": "Usuario requerido"}), 400
+    reservas = Reserva.query.filter_by(usuario=usuario).all()
+    return jsonify([
+        {
+            "id": r.id,
+            "usuario": r.usuario,
+            "taller_id": r.taller_id,
+            "estado": r.estado,
+            "pagado": r.pagado
+        } for r in reservas
+    ])
 
 @app.route('/reservar', methods=['POST'])
 def crear_reserva():
     data = request.get_json()
-    reservas = leer_reservas()
-    nueva_reserva = {
-        "id": len(reservas) + 1,
-        "usuario": data["usuario"],
-        "taller_id": data["taller_id"],
-        "estado": "confirmada",
-        "pagado": False
-    }
-    reservas.append(nueva_reserva)
-    guardar_reservas(reservas)
-    return jsonify({"mensaje": "Reserva creada", "reserva": nueva_reserva}), 201
+    usuario = data.get('usuario')
+    taller_id = data.get('taller_id')
+
+    if not usuario or not taller_id:
+        return jsonify({"error": "Datos incompletos"}), 400
+
+    reserva = Reserva(usuario=usuario, taller_id=taller_id)
+    db.session.add(reserva)
+    db.session.commit()
+
+    return jsonify({"mensaje": "Reserva creada", "reserva_id": reserva.id})
 
 @app.route('/reservas/<int:id>/cancelar', methods=['PUT'])
 def cancelar_reserva(id):
-    reservas = leer_reservas()
-    for r in reservas:
-        if r['id'] == id:
-            r['estado'] = 'cancelada'
-            guardar_reservas(reservas)
-            return jsonify({"mensaje": "Reserva cancelada"})
-    return jsonify({"error": "Reserva no encontrada"}), 404
+    reserva = Reserva.query.get(id)
+    if not reserva:
+        return jsonify({"error": "Reserva no encontrada"}), 404
+    reserva.estado = "cancelada"
+    db.session.commit()
+    return jsonify({"mensaje": "Reserva cancelada"})
 
 @app.route('/reservas/<int:id>/pagar', methods=['PUT'])
 def pagar_reserva(id):
-    reservas = leer_reservas()
-    for r in reservas:
-        if r['id'] == id:
-            r['pagado'] = True
-            guardar_reservas(reservas)
-            return jsonify({"mensaje": "Pago simulado"})
-    return jsonify({"error": "Reserva no encontrada"}), 404
+    reserva = Reserva.query.get(id)
+    if not reserva:
+        return jsonify({"error": "Reserva no encontrada"}), 404
+    reserva.pagado = True
+    db.session.commit()
+    return jsonify({"mensaje": "Pago registrado"})
 
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5003)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5003)
