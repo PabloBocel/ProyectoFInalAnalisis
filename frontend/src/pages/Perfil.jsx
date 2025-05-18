@@ -1,27 +1,60 @@
-import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { obtenerPerfil, actualizarPerfil } from '../services/auth';
 import './Perfil.css';
+import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
+
+
+const correoUsuario = localStorage.getItem('usuarioEmail');
 
 export default function Perfil() {
   const navigate = useNavigate();
   const [datos, setDatos] = useState({
-    nombre: 'Juan Pérez',
-    correo: 'test@email.com',
-    telefono: '5555-5555',
-    direccion: 'Ciudad de Guatemala',
-    rol: 'Estudiante',
-    nacimiento: '1995-01-01',
+    nombre: '',
+    correo: '',
+    telefono: '',
+    direccion: '',
+    rol: '',
+    nacimiento: '',
   });
   const [guardado, setGuardado] = useState(false);
 
   const handleChange = (e) => {
-    setDatos({ ...datos, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setDatos((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleGuardar = () => {
+
+  const handleGuardar = async () => {
+  try {
+    await actualizarPerfil(correoUsuario, {
+      nombre: datos.nombre,
+      telefono: datos.telefono,
+      direccion: datos.direccion,
+      nacimiento: datos.nacimiento
+    });
+    toast.success('✅ Cambios guardados correctamente');
     setGuardado(true);
     setTimeout(() => setGuardado(false), 2000);
-  };
+  } catch (err) {
+    console.error("Error al actualizar perfil", err);
+    toast.error("❌ Error al guardar los datos");
+  }
+};
+
+
+useEffect(() => {
+  if (!correoUsuario) return;
+
+  obtenerPerfil(correoUsuario)
+    .then((perfil) => {
+      setDatos(perfil);
+    })
+    .catch((err) => {
+      console.error("Error al cargar perfil", err);
+    });
+}, []);
+
 
   return (
     <>
@@ -30,7 +63,15 @@ export default function Perfil() {
         <div className="perfil-nav">
           <button onClick={() => navigate('/inicio')}>📚 Cursos</button>
           <button onClick={() => navigate('/mis-reservas')}>📋 Mis Reservas</button>
-          <button onClick={() => navigate('/')}>🚪 Cerrar sesión</button>
+          <button
+            onClick={() => {
+              localStorage.removeItem('usuarioEmail');
+              toast.info('Sesión cerrada con éxito');
+              navigate('/');
+            }}
+          >
+            🚪 Cerrar sesión
+          </button>
         </div>
       </header>
 
@@ -55,12 +96,10 @@ export default function Perfil() {
         </label>
 
         <label>Rol:
-          <select name="rol" value={datos.rol} onChange={handleChange}>
-            <option value="Estudiante">Estudiante</option>
-            <option value="Chef">Chef</option>
-            <option value="Instructor">Instructor</option>
-          </select>
+          <input name="rol" value="Estudiante" disabled />
         </label>
+
+
 
         <label>Fecha de nacimiento:
           <input type="date" name="nacimiento" value={datos.nacimiento} onChange={handleChange} />

@@ -18,6 +18,11 @@ class Usuario(db.Model):
     nombre = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
+    telefono = db.Column(db.String(20))
+    direccion = db.Column(db.String(120))
+    nacimiento = db.Column(db.String(10))
+    rol = db.Column(db.String(30), default='Estudiante')
+
 
 # Crear la tabla si no existe
 with app.app_context():
@@ -39,19 +44,6 @@ def verificar_db():
             "detalle": str(e)
         }), 500
 
-# 🔎 Obtener todos los usuarios registrados
-@app.route('/usuarios', methods=['GET'])
-def listar_usuarios():
-    usuarios = Usuario.query.all()
-    return jsonify([
-        {
-            "id": u.id,
-            "nombre": u.nombre,
-            "email": u.email
-        } for u in usuarios
-    ])
-
-# 🔐 Registro de usuario
 @app.route("/register", methods=["POST"])
 def register():
     data = request.get_json()
@@ -59,17 +51,33 @@ def register():
     email = data.get("email", "").strip().lower()
     password = data.get("password", "").strip()
 
+    # valores opcionales
+    telefono = data.get("telefono", "")
+    direccion = data.get("direccion", "")
+    nacimiento = data.get("nacimiento", "")
+    rol = "Estudiante"  # fijo
+
     if not all([nombre, email, password]):
         return jsonify({"error": "Faltan campos obligatorios"}), 400
 
     if Usuario.query.filter_by(email=email).first():
         return jsonify({"error": "Usuario ya registrado"}), 400
 
-    nuevo_usuario = Usuario(nombre=nombre, email=email, password=password)
+    nuevo_usuario = Usuario(
+        nombre=nombre,
+        email=email,
+        password=password,
+        telefono=telefono,
+        direccion=direccion,
+        nacimiento=nacimiento,
+        rol=rol
+    )
+
     db.session.add(nuevo_usuario)
     db.session.commit()
 
     return jsonify({"message": f"Usuario {nombre} registrado con éxito"}), 201
+
 
 # 🔓 Inicio de sesión
 @app.route("/login", methods=["POST"])
@@ -87,6 +95,51 @@ def login():
         return jsonify({"error": "Credenciales inválidas"}), 401
 
     return jsonify({"message": f"Bienvenido {usuario.nombre}"}), 200
+
+@app.route("/usuarios/<email>", methods=["GET"])
+def obtener_usuario(email):
+    usuario = Usuario.query.filter_by(email=email).first()
+    if not usuario:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+
+    return jsonify({
+        "nombre": usuario.nombre,
+        "email": usuario.email,
+        "telefono": usuario.telefono or "",
+        "direccion": usuario.direccion or "",
+        "nacimiento": usuario.nacimiento or "",
+        "rol": usuario.rol or "Estudiante"
+    })
+
+@app.route("/usuarios/<email>", methods=["PUT"])
+def actualizar_usuario(email):
+    usuario = Usuario.query.filter_by(email=email).first()
+    if not usuario:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+
+    data = request.get_json()
+    usuario.nombre = data.get("nombre", usuario.nombre)
+    usuario.telefono = data.get("telefono", usuario.telefono)
+    usuario.direccion = data.get("direccion", usuario.direccion)
+    usuario.nacimiento = data.get("nacimiento", usuario.nacimiento)
+    db.session.commit()
+
+    return jsonify({"mensaje": "Usuario actualizado con éxito"})
+
+@app.route('/usuarios', methods=['GET'])
+def listar_usuarios():
+    usuarios = Usuario.query.all()
+    return jsonify([
+        {
+            "id": u.id,
+            "nombre": u.nombre,
+            "email": u.email,
+            "telefono": u.telefono,
+            "direccion": u.direccion,
+            "nacimiento": u.nacimiento,
+            "rol": u.rol
+        } for u in usuarios
+    ])
 
 # 🚀 Iniciar la app
 if __name__ == "__main__":

@@ -12,7 +12,7 @@ export default function PaginaPrincipal() {
     try {
       const email = 'test@email.com'; // Aquí luego se usará el usuario autenticado
       const res = await crearReserva(email, tallerId);
-      toast.error(`✅ Reserva creada correctamente.`, {icon: '✅',
+      toast.success(`✅ Reserva creada correctamente.`, {icon: '✅',
     style: {
     background: '#E6F4EA',
     color: '#2E7D32'}});
@@ -69,7 +69,15 @@ export default function PaginaPrincipal() {
         <div className="perfil-nav">
           <button onClick={() => navigate('/mis-reservas')}>📋 Mis Reservas</button>
           <button onClick={() => navigate('/perfil')}>👤 Perfil</button>
-          <button onClick={() => navigate('/')}>🚪 Cerrar sesión</button>
+          <button
+            onClick={() => {
+              localStorage.removeItem('usuarioEmail');
+              toast.info('Sesión cerrada con éxito');
+              navigate('/');
+            }}
+          >
+            🚪 Cerrar sesión
+          </button>
         </div>
       </header>
       <div className="espaciador-header" />

@@ -9,18 +9,26 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
-    try {
-      const res = await login(email, password);
-      toast.error(`🔓 ${res.data.message}`, {icon: '✅',
-    style: {
-    background: '#E6F4EA',
-    color: '#2E7D32'}});
-      navigate('/inicio');
-    } catch (err) {
-      toast.error(`❌ ${err.response?.data?.error || 'Error al iniciar sesión'}`);
-    }
-  };
+  const handleLogin = async () => { 
+  try {
+    const res = await login(email, password);
+
+    localStorage.setItem('usuarioEmail', email);
+
+    toast.success(`🔓 ${res.data.message}`, {
+      icon: '✅',
+      style: {
+        background: '#E6F4EA',
+        color: '#2E7D32'
+      }
+    });
+
+    navigate('/inicio');
+  } catch (err) {
+    toast.error(`❌ ${err.response?.data?.error || 'Error al iniciar sesión'}`);
+  }
+};
+
 
   return (
     <div className="login-screen">

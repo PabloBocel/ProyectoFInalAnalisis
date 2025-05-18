@@ -35,7 +35,7 @@ export default function LoginRegister() {
 
   try {
     const res = await register(nombre, email, pass1);
-    toast.error(`✔️ ${res.data.message}`, {icon: '✅',
+    toast.success(`✔️ ${res.data.message}`, {icon: '✅',
     style: {
     background: '#E6F4EA',
     color: '#2E7D32'}});

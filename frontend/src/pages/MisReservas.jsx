@@ -9,7 +9,7 @@ export default function MisReservas() {
   const [reservas, setReservas] = useState([]);
   const [talleres, setTalleres] = useState([]);
   const [loading, setLoading] = useState(true);
-  const email = 'test@email.com'; // Sustituir luego por sesión
+  const email = localStorage.getItem('usuarioEmail');
   const navigate = useNavigate();
   const [mostrarModal, setMostrarModal] = useState(false);
   const [reservaSeleccionada, setReservaSeleccionada] = useState(null);
@@ -25,17 +25,20 @@ export default function MisReservas() {
 
 
   useEffect(() => {
-  Promise.all([getReservas(email), getTalleres()])
-    .then(([res, talls]) => {
-      setReservas(res);
-      setTalleres(talls);
-      setLoading(false);
-    })
-    .catch((err) => {
-      console.error('Error al cargar', err);
-      setLoading(false);
-    });
-}, []);
+    if (!email) return;
+
+    Promise.all([getReservas(email), getTalleres()])
+      .then(([res, talls]) => {
+        setReservas(res);
+        setTalleres(talls);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Error al cargar', err);
+        setLoading(false);
+      });
+  }, []);
+
 
   const nombreTaller = (id) => {
     const taller = talleres.find(t => t.id === id);
@@ -59,7 +62,15 @@ export default function MisReservas() {
       <div className="perfil-nav">
         <button onClick={() => navigate('/inicio')}>📚 Cursos</button>
         <button onClick={() => navigate('/perfil')}>👤 Perfil</button>
-        <button onClick={() => navigate('/')}>🚪 Cerrar sesión</button>
+        <button
+          onClick={() => {
+            localStorage.removeItem('usuarioEmail');
+            toast.info('Sesión cerrada con éxito');
+            navigate('/');
+          }}
+        >
+          🚪 Cerrar sesión
+        </button>
       </div>
     </header>
     <div className="espaciador-header" />
@@ -136,7 +147,7 @@ export default function MisReservas() {
                   const json = await res.json();
                   if (res.ok) {
                     await handlePago(reservaSeleccionada);
-                    toast.error("✅ " + json.mensaje + " (" + json.tipo + ")", {icon: '✅',
+                    toast.success("✅ " + json.mensaje + " (" + json.tipo + ")", {icon: '✅',
                     style: {
                     background: '#E6F4EA',
                     color: '#2E7D32'}});
