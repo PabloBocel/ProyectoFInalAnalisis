@@ -11,19 +11,36 @@ export default function LoginRegister() {
   const [pass2, setPass2] = useState('');
 
   const handleRegister = async () => {
-    if (pass1 !== pass2) {
-      alert('❌ Las contraseñas no coinciden');
-      return;
-    }
+  if (!nombre || nombre.length < 2) {
+    alert('❌ El nombre debe tener al menos 2 caracteres');
+    return;
+  }
 
-    try {
-      const res = await register({ nombre, email, password: pass1 });
-      alert(`✔️ ${res.data.message}`);
-      navigate('/login');
-    } catch (err) {
-      alert(`❌ ${err.response?.data?.error || 'Error al registrar'}`);
-    }
-  };
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    alert('❌ Ingresa un correo válido');
+    return;
+  }
+
+  if (pass1.length < 8) {
+    alert('❌ La contraseña debe tener al menos 8 caracteres');
+    return;
+  }
+
+  if (pass1 !== pass2) {
+    alert('❌ Las contraseñas no coinciden');
+    return;
+  }
+
+  try {
+    const res = await register(nombre, email, pass1);
+    alert(`✔️ ${res.data.message}`);
+    navigate('/login');
+  } catch (err) {
+    console.error('💥 Error completo al registrar:', err);
+    alert(`❌ ${err.response?.data?.error || 'Error al registrar'}`);
+  }
+};
 
   return (
     <div className="registro-screen">

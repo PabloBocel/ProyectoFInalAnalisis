@@ -6,6 +6,8 @@ services:
     ports:
       - "5001:5000"
     restart: always
+    depends_on:
+      - mysql
 
   frontend:
     build: ./frontend
@@ -35,3 +37,16 @@ services:
     ports:
       - "5004:5000"
     restart: always
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: Pokemon6+
+      MYSQL_DATABASE: mastercook_auth
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
