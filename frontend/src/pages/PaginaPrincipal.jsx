@@ -4,10 +4,13 @@ import { crearReserva } from '../services/reservas';
 import { useNavigate } from 'react-router-dom';
 import './PaginaPrincipal.css';
 import { toast } from 'react-toastify';
+import { getReservas } from '../services/reservas';
 
 export default function PaginaPrincipal() {
   const navigate = useNavigate();
   const correoUsuario = localStorage.getItem('usuarioEmail');
+  const [misReservas, setMisReservas] = useState([]);
+
 
   const [showMenu, setShowMenu] = useState(false);
   const [showPrecioMenu, setShowPrecioMenu] = useState(false);
@@ -25,9 +28,9 @@ export default function PaginaPrincipal() {
         return;
       }
       await crearReserva(correoUsuario, tallerId);
-      toast.success("✅ Reserva creada correctamente.");
+      toast.success("Reserva creada correctamente.");
     } catch (err) {
-      toast.error("❌ Error al crear la reserva");
+      toast.error("Error al crear la reserva");
       console.error(err);
     }
   };
@@ -82,6 +85,12 @@ export default function PaginaPrincipal() {
       }
       return 0;
     });
+
+    useEffect(() => {
+      if (correoUsuario) {
+        getReservas(correoUsuario).then((res) => setMisReservas(res));
+      }
+    }, []);
 
   return (
     <>
@@ -159,24 +168,47 @@ export default function PaginaPrincipal() {
         </div>
 
         <div className="courses-container full-width-section">
-          {loading ? <p>Cargando talleres...</p> : talleresFiltrados.map(taller => (
-            <div className="course-card" key={taller.id}>
-              <div className="image-container">
-                <img src={taller.imagen || '/placeholder.jpg'} alt={taller.nombre} className="course-image" />
-              </div>
-              <div className="course-content">
-                <h2 className="course-name">{taller.nombre}</h2>
-                <p className="course-description">{taller.descripcion || 'Descripción no disponible'}</p>
-                <div className="course-details">
-                  <span className="course-date">📅 {taller.fecha}</span>
-                  <span className="course-price">💰 Q{taller.precio}</span>
+          {loading ? (
+            <p>Cargando talleres...</p>
+          ) : (
+            talleresFiltrados.map(taller => {
+              const yaReservadoPagado = misReservas.some(r => r.taller_id === taller.id && r.pagado);
+
+              return (
+                <div className="course-card" key={taller.id}>
+                  <div className="image-container">
+                    <img src={taller.imagen || '/placeholder.jpg'} alt={taller.nombre} className="course-image" />
+                  </div>
+                  <div className="course-content">
+                    <h2 className="course-name">{taller.nombre}</h2>
+                    <p className="course-description">{taller.descripcion || 'Descripción no disponible'}</p>
+                    <div className="course-details">
+                      <span className="course-date">📅 {taller.fecha}</span>
+                      <span className="course-price">💰 Q{taller.precio}</span>
+                      <p className="course-cupos">
+                        🎟️ Cupos: {taller.cupo}/{taller.cupo_total}
+                      </p>
+                    </div>
+                    <button
+                      className="reserve-button"
+                      disabled={taller.cupo <= 0 || yaReservadoPagado}
+                      style={{
+                        backgroundColor: taller.cupo <= 0 || yaReservadoPagado ? '#ccc' : '#6B8E23',
+                        cursor: taller.cupo <= 0 || yaReservadoPagado ? 'not-allowed' : 'pointer'
+                      }}
+                      onClick={() => handleReservar(taller.id)}
+                    >
+                      {taller.cupo <= 0
+                        ? 'NO HAY CUPOS'
+                        : yaReservadoPagado
+                        ? 'YA RESERVADO'
+                        : 'RESERVAR'}
+                    </button>
+                  </div>
                 </div>
-                <button className="reserve-button" onClick={() => handleReservar(taller.id)}>
-                  {taller.cupo > 0 ? 'RESERVAR' : 'NO HAY CUPOS'}
-                </button>
-              </div>
-            </div>
-          ))}
+              );
+            })
+          )}
         </div>
       </main>
     </>

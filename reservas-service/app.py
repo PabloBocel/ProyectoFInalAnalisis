@@ -1,15 +1,18 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import inspect
 
 app = Flask(__name__)
 CORS(app)
 
+# Configuración MySQL
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Pokemon6+@mysql/mastercook_auth'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Inicializa DB
 db = SQLAlchemy(app)
 
+# Modelos
 class Reserva(db.Model):
     __tablename__ = 'reservas'
     id = db.Column(db.Integer, primary_key=True)
@@ -18,17 +21,22 @@ class Reserva(db.Model):
     estado = db.Column(db.String(50), default='confirmada')
     pagado = db.Column(db.Boolean, default=False)
 
+class Taller(db.Model):
+    __tablename__ = 'talleres'
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(100), nullable=False)
+    categoria = db.Column(db.String(50), nullable=False)
+    descripcion = db.Column(db.String(255))
+    fecha = db.Column(db.String(20))
+    duracion = db.Column(db.String(20))
+    precio = db.Column(db.Float)
+    cupo = db.Column(db.Integer)
+    cupo_total = db.Column(db.Integer)
+
 with app.app_context():
     db.create_all()
 
-@app.route('/db-status', methods=['GET'])
-def db_status():
-    try:
-        tablas = inspect(db.engine).get_table_names()
-        return jsonify({"mensaje": "Conectado a DB", "tablas": tablas})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
+# Endpoints
 @app.route('/reservas', methods=['GET'])
 def obtener_reservas():
     usuario = request.args.get('usuario')
@@ -54,18 +62,37 @@ def crear_reserva():
     if not usuario or not taller_id:
         return jsonify({"error": "Datos incompletos"}), 400
 
+    taller = Taller.query.get(taller_id)
+    if not taller:
+        return jsonify({"error": "Taller no encontrado"}), 404
+
+    if taller.cupo >= taller.cupo_total:
+        return jsonify({"error": "No hay cupos disponibles"}), 400
+
+    # Verifica si el usuario ya reservó este taller
+    existente = Reserva.query.filter_by(usuario=usuario, taller_id=taller_id).first()
+    if existente:
+        return jsonify({"error": "Ya tienes una reserva para este taller"}), 400
+
     reserva = Reserva(usuario=usuario, taller_id=taller_id)
+    taller.cupo += 1
+
     db.session.add(reserva)
     db.session.commit()
 
-    return jsonify({"mensaje": "Reserva creada", "reserva_id": reserva.id})
+    return jsonify({"mensaje": "Reserva creada", "reserva_id": reserva.id}), 201
 
 @app.route('/reservas/<int:id>/cancelar', methods=['PUT'])
 def cancelar_reserva(id):
     reserva = Reserva.query.get(id)
     if not reserva:
         return jsonify({"error": "Reserva no encontrada"}), 404
+
     reserva.estado = "cancelada"
+    taller = Taller.query.get(reserva.taller_id)
+    if taller and taller.cupo > 0:
+        taller.cupo -= 1
+
     db.session.commit()
     return jsonify({"mensaje": "Reserva cancelada"})
 
@@ -74,8 +101,10 @@ def pagar_reserva(id):
     reserva = Reserva.query.get(id)
     if not reserva:
         return jsonify({"error": "Reserva no encontrada"}), 404
+
     reserva.pagado = True
     db.session.commit()
+
     return jsonify({"mensaje": "Pago registrado"})
 
 if __name__ == '__main__':
