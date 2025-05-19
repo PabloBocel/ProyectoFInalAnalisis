@@ -5,11 +5,10 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 
-const correoUsuario = localStorage.getItem('usuarioEmail');
-
 
 export default function Perfil() {
   const navigate = useNavigate();
+  const correoUsuario = localStorage.getItem('usuarioEmail');
   const [showMenu, setShowMenu] = useState(false);
   const [datos, setDatos] = useState({
     nombre: '',
@@ -35,12 +34,12 @@ export default function Perfil() {
       direccion: datos.direccion,
       nacimiento: datos.nacimiento
     });
-    toast.success('✅ Cambios guardados correctamente');
+    toast.success('Cambios guardados correctamente');
     setGuardado(true);
     setTimeout(() => setGuardado(false), 2000);
   } catch (err) {
     console.error("Error al actualizar perfil", err);
-    toast.error("❌ Error al guardar los datos");
+    toast.error("Error al guardar los datos");
   }
 };
 
