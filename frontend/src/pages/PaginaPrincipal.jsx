@@ -8,9 +8,14 @@ import { toast } from 'react-toastify';
 
 export default function PaginaPrincipal() {
   const navigate = useNavigate();
+  const correoUsuario = localStorage.getItem('usuarioEmail');
   const handleReservar = async (tallerId) => {
     try {
-      const email = 'test@email.com'; // Aquí luego se usará el usuario autenticado
+      const email = correoUsuario;
+      if (!email) {
+          toast.error("Debes iniciar sesión para reservar.");
+          return;
+        }
       const res = await crearReserva(email, tallerId);
       toast.success(`✅ Reserva creada correctamente.`, {icon: '✅',
     style: {
