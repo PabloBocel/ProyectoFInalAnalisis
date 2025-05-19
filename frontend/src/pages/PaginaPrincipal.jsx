@@ -90,13 +90,13 @@ export default function PaginaPrincipal() {
           <img src="/Perfil.png" alt="Perfil" className="user-icon-inner" />
           {showMenu && (
             <div className="user-dropdown">
-              <button onClick={() => navigate('/perfil')}>👤 Perfil</button>
-              <button onClick={() => navigate('/mis-reservas')}>📋 Mis Reservas</button>
+              <button onClick={() => navigate('/perfil')}> Perfil</button>
+              <button onClick={() => navigate('/mis-reservas')}>Mis Reservas</button>
               <button onClick={() => {
                 localStorage.removeItem('usuarioEmail');
                 toast.info('Sesión cerrada con éxito');
                 navigate('/');
-              }}>🚪 Cerrar sesión</button>
+              }}>Cerrar sesión</button>
             </div>
           )}
         </div>
@@ -116,6 +116,8 @@ export default function PaginaPrincipal() {
             </button>
           </div>
         </div>
+
+        <img src="/Logo_Mastercook.png" alt="Logo MasterCook" className="logo-mastercook" />
       </header>
 
       <main className="full-width-main">

@@ -400,3 +400,11 @@ header::before {
 .sort-button:hover {
   background-color: #c04545;
 }
+
+.logo-mastercook {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+

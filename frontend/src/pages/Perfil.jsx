@@ -7,8 +7,10 @@ import { toast } from 'react-toastify';
 
 const correoUsuario = localStorage.getItem('usuarioEmail');
 
+
 export default function Perfil() {
   const navigate = useNavigate();
+  const [showMenu, setShowMenu] = useState(false);
   const [datos, setDatos] = useState({
     nombre: '',
     correo: '',
@@ -58,22 +60,29 @@ useEffect(() => {
 
   return (
     <>
-      <header className="header-principal">
-        <h1>MasterCook Academy</h1>
-        <div className="perfil-nav">
-          <button onClick={() => navigate('/inicio')}>📚 Cursos</button>
-          <button onClick={() => navigate('/mis-reservas')}>📋 Mis Reservas</button>
-          <button
-            onClick={() => {
-              localStorage.removeItem('usuarioEmail');
-              toast.info('Sesión cerrada con éxito');
-              navigate('/');
-            }}
-          >
-            🚪 Cerrar sesión
-          </button>
-        </div>
-      </header>
+      <header className="full-width-header">
+      <div className="user-icon" onClick={() => setShowMenu(!showMenu)}>
+        <img src="/Perfil.png" alt="Perfil" className="user-icon-inner" />
+        {showMenu && (
+          <div className="user-dropdown">
+            <button onClick={() => navigate('/inicio')}>Cursos</button>
+            <button onClick={() => navigate('/mis-reservas')}>Mis Reservas</button>
+            <button
+              onClick={() => {
+                localStorage.removeItem('usuarioEmail');
+                toast.info('Sesión cerrada con éxito');
+                navigate('/');
+              }}
+            >
+              Cerrar sesión
+            </button>
+          </div>
+        )}
+      </div>
+
+      <img src="/Logo_Mastercook.png" alt="MasterCook Academy" className="logo-mastercook" />
+    </header>
+
 
       <div className="espaciador-header" />
       <div className="perfil-container">
