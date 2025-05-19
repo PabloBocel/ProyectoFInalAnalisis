@@ -1,201 +1,402 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: #FAFAFA;
-  font-family: sans-serif;
-  overflow-x: hidden;
-  box-sizing: border-box;
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.pagina-principal {
-  margin-top: 100px;
-  width: 100vw;
-  min-height: 100vh;
-  padding: 2rem 1rem;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 100px;
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #FFF3E2;
+    color: #6B8E23;
+    min-height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
 }
 
-.categorias-menu {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.8rem;
-  margin: 1.5rem 0 1rem;
+/* Header */
+.full-width-header {
+    width: 100%;
+    padding: 20px 40px;
+    background-color: #FAFAFA;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+
+
+/* Buscador centrado */
+.header-center {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.search-prompt {
+    font-size: 18px;
+    color: #6B8E23;
+    white-space: nowrap;
+}
+
+.search-container {
+    position: relative;
+    width: 300px;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 12px 50px 12px 20px;
+    border: 2px solid #6B8E23;
+    border-radius: 30px;
+    font-size: 16px;
+    background-color: #FAFAFA;
+}
+
+.search-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    background-color: #D94F4F;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.search-icon {
+    color: white;
+    font-size: 16px;
+}
+
+/* Logo */
+.logo {
+    height: 50px;
+    width: auto;
+}
+
+/* Contenido principal */
+.full-width-main {
+    width: 100%;
+    padding: 0;
+}
+
+.full-width-section {
+    width: 100%;
+    padding: 30px 40px;
+}
+
+.recommendations-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    background-color: #FFF3E2;
+}
+
+.recommendations-title {
+    font-size: 42px;
+    font-weight: bold;
+    color: #D94F4F;
+}
+
+.sort-options {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.sort-options span {
+    font-size: 22px;
+    color: #D94F4F;
+    font-weight: bold;
+}
+
+.sort-button {
+    background-color: #D94F4F;
+    color: #FFF3E2;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.sort-button:hover {
+    background-color: #c04545;
+    transform: translateY(-2px);
+}
+
+/* Tarjetas de cursos */
+.courses-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    width: 100%;
+    padding: 0 40px 40px;
+}
+
+.course-card {
+    background-color: #FAFAFA;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 650px;
+}
+
+.image-container {
+    height: 350px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.course-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.course-card:hover .course-image {
+    transform: scale(1.05);
+}
+
+.course-content {
+    padding: 25px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.course-name {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #6B8E23;
+    line-height: 1.2;
+}
+
+.course-description {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #6B8E23;
+    line-height: 1.5;
+    flex-grow: 1;
+}
+
+.course-details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    font-size: 20px;
+}
+
+.course-date, .course-price {
+    color: #6B8E23;
+    font-weight: bold;
+}
+
+.reserve-button {
   width: 100%;
-}
-
-.categoria-btn {
-  padding: 0.5rem 1rem;
-  background: #FFF3E2;
-  border: 1px solid #6B8E23;
-  border-radius: 20px;
-  color: #6B8E23;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.categoria-btn.activa,
-.categoria-btn:hover {
-  background: #6B8E23;
+  padding: 15px;
+  background-color: #6B8E23; /* Verde */
   color: white;
-}
-
-.filtros-bar {
-  width: 100%;
-  max-width: 800px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 2rem;
-  gap: 1rem;
-}
-.filtros-bar .ordenadores {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  justify-content: center;
-  width: 100%;
-}
-
-.filtros-bar input[type="text"] {
-  width: 100%;
-  padding: 0.8rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 0.5rem;
-}
-
-.filtros-bar select {
-  padding: 0.5rem 1rem;
-  background: #FFF3E2;
-  border: 1px solid #6B8E23;
-  border-radius: 20px;
-  color: #6B8E23;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
-  width: auto;
+  font-size: 18px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
-.talleres-grid {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  justify-content: center;
-  box-sizing: border-box;
+.reserve-button:hover {
+  background-color: #5a7c1c;
 }
 
-.card-taller {
-  background: white;
-  border-radius: 0.75rem;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+/* Divisores */
+header::after {
+    content: "|";
+    color: #ffbd59;
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    left: 200px;
+}
+
+header::before {
+    content: "|";
+    color: #ffbd59;
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    right: 200px;
+}
+
+/* ICONO DE USUARIO (usa una imagen redonda) */
+.user-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #D94F4F; 
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
 }
 
-.card-taller img {
+.user-icon-inner {
   width: 100%;
-  height: 180px;
+  height: 100%;
   object-fit: cover;
 }
 
-.contenido {
-  padding: 1rem;
+/* MENÚ DESPLEGABLE DE USUARIO */
+.user-dropdown {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  background-color: white;
+  border: 2px solid #D94F4F;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  z-index: 100;
+  min-width: 160px;
 }
 
-.contenido h3 {
-  color: #D94F4F;
-  margin: 0;
-}
-
-.descripcion {
-  font-size: 0.9rem;
-  color: #666;
-}
-
-.info {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.85rem;
-  color: #333;
-}
-
-.categoria {
-  font-size: 0.8rem;
-  background: #FFF3E2;
-  color: #6B8E23;
-  padding: 0.3rem 0.6rem;
-  border-radius: 0.5rem;
-  width: fit-content;
-}
-
-.btn-detalles {
-  align-self: flex-end;
-  background: #D94F4F;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  margin-top: 0.5rem;
-}
-
-.footer {
-  text-align: center;
-  background: #FFF3E2;
-  padding: 2rem;
-  margin-top: 4rem;
-  width: 100%;
-}
-
-.footer img {
-  height: 60px;
-  margin-bottom: 1rem;
-}
-.header-principal {
-  position: sticky;
-  top: 0;
-  width: 100vw;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #FFF3E2;
-  padding: 1rem 2rem;
-  border-bottom: 1px solid #eee;
-  box-sizing: border-box;
-  z-index: 1000;
-}
-
-.header-principal h1 {
-  margin: 0;
-  font-size: 1.5rem;
-  color: #D94F4F;
-}
-
-.precio {
-  font-size: 0.9rem;
-  color: #333;
-  margin-top: 0.3rem;
-}
-
-.perfil-nav button {
-  margin-left: 1rem;
+.user-dropdown button {
   background: none;
   border: none;
-  color: #6B8E23;
+  padding: 12px 20px;
   cursor: pointer;
-  font-size: 1rem;
+  text-align: left;
+  color: #D94F4F;
+  font-weight: bold;
 }
 
-.espaciador-header{
-  height: 100px;;
+.user-dropdown button:hover {
+  background-color: #FFF3E2;
+}
+
+/* BARRA DE BÚSQUEDA CON LUPA */
+.search-container {
+  position: relative;
+  width: 300px;
+}
+
+.search-bar {
+  width: 100%;
+  padding: 12px 50px 12px 20px;
+  border: 2px solid #6B8E23;
+  border-radius: 30px;
+  font-size: 16px;
+  background-color: #FAFAFA;
+  color: #333;
+}
+
+.search-button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  background-color: #D94F4F;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.search-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+/* MENÚ DE ORDENAMIENTO (dropdowns de PRECIO y FECHA) */
+.sort-group {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  background-color: white;
+  border: 2px solid #D94F4F;
+  border-radius: 10px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+}
+
+.dropdown-menu button {
+  background: none;
+  border: none;
+  padding: 10px 20px;
+  text-align: left;
+  font-weight: bold;
+  color: #D94F4F;
+  cursor: pointer;
+}
+
+.dropdown-menu button:hover {
+  background-color: #FFF3E2;
+}
+
+/* SELECT DE CATEGORÍA (estilizado como botón) */
+.sort-options select.sort-button {
+  appearance: none;
+  background-color: #D94F4F;
+  color: #FFF3E2;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* ADICIONALES */
+.sort-options {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.sort-button {
+  background-color: #D94F4F;
+  color: #FFF3E2;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.sort-button:hover {
+  background-color: #c04545;
 }
