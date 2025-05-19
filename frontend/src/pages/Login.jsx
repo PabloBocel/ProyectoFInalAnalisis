@@ -56,7 +56,7 @@ export default function Login() {
           <button className="btn-login" onClick={handleLogin}>INICIAR SESIÓN</button>
           <button className="btn-volver" onClick={() => navigate('/')}>⬅ VOLVER AL MENÚ</button>
           <p className="no-cuenta">¿No tienes una cuenta?</p>
-          <button className="btn-volver" onClick={() => navigate('/registro')}>
+          <button className="btn-volver" onClick={() => navigate('/Register')}>
             👉 REGÍSTRATE AQUÍ
           </button>
         </form>
