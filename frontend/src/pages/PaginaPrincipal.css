@@ -5,13 +5,16 @@
     box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+  width: 100%;
+  background-color: #FFF3E2;
+}
+
+
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #FFF3E2;
-    color: #6B8E23;
-    min-height: 100vh;
-    width: 100vw;
-    overflow-x: hidden;
+  font-family: 'Arial', sans-serif;
+  overflow-x: hidden;
 }
 
 /* Header */
@@ -25,7 +28,6 @@ body {
     align-items: center;
     position: relative;
 }
-
 
 
 /* Buscador centrado */
@@ -85,11 +87,13 @@ body {
     width: auto;
 }
 
-/* Contenido principal */
 .full-width-main {
-    width: 100%;
-    padding: 0;
+  background-color: #FFF3E2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
+
 
 .full-width-section {
     width: 100%;
@@ -109,6 +113,13 @@ body {
     font-weight: bold;
     color: #D94F4F;
 }
+
+body, #root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 
 .sort-options {
     display: flex;
@@ -149,16 +160,11 @@ body {
 }
 
 .course-card {
-    background-color: #FAFAFA;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    height: 650px;
+  height: auto; /* o quita height si estaba fijo */
+  display: flex;
+  flex-direction: column;
 }
+
 
 .image-container {
     height: 350px;

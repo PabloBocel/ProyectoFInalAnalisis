@@ -172,33 +172,39 @@ export default function PaginaPrincipal() {
             <p>Cargando talleres...</p>
           ) : (
             talleresFiltrados.map(taller => {
+              const cupoDisponible = Number(taller.cupo);
+              const cupoTotal = Number(taller.cupo_total);
               const yaReservadoPagado = misReservas.some(r => r.taller_id === taller.id && r.pagado);
+              const sinCupo = cupoDisponible >= cupoTotal;
 
               return (
                 <div className="course-card" key={taller.id}>
-                  <div className="image-container">
-                    <img src={taller.imagen || '/placeholder.jpg'} alt={taller.nombre} className="course-image" />
-                  </div>
                   <div className="course-content">
                     <h2 className="course-name">{taller.nombre}</h2>
                     <p className="course-description">{taller.descripcion || 'Descripción no disponible'}</p>
+
                     <div className="course-details">
                       <span className="course-date">📅 {taller.fecha}</span>
                       <span className="course-price">💰 Q{taller.precio}</span>
-                      <p className="course-cupos">
-                        🎟️ Cupos: {taller.cupo}/{taller.cupo_total}
-                      </p>
+                      <p className="course-cupos">🎟️ Cupos: {taller.cupo}/{taller.cupo_total}</p>
                     </div>
+
                     <button
                       className="reserve-button"
-                      disabled={taller.cupo <= 0 || yaReservadoPagado}
+                      disabled={Number(taller.cupo) >= Number(taller.cupo_total) || yaReservadoPagado}
                       style={{
-                        backgroundColor: taller.cupo <= 0 || yaReservadoPagado ? '#ccc' : '#6B8E23',
-                        cursor: taller.cupo <= 0 || yaReservadoPagado ? 'not-allowed' : 'pointer'
+                        backgroundColor:
+                          Number(taller.cupo) >= Number(taller.cupo_total) || yaReservadoPagado
+                            ? '#ccc'
+                            : '#6B8E23',
+                        cursor:
+                          Number(taller.cupo) >= Number(taller.cupo_total) || yaReservadoPagado
+                            ? 'not-allowed'
+                            : 'pointer'
                       }}
                       onClick={() => handleReservar(taller.id)}
                     >
-                      {taller.cupo <= 0
+                      {Number(taller.cupo) >= Number(taller.cupo_total)
                         ? 'NO HAY CUPOS'
                         : yaReservadoPagado
                         ? 'YA RESERVADO'
