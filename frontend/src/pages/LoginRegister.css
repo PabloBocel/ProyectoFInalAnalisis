@@ -25,6 +25,10 @@ html, body, #root {
 }
 
 .registro-left {
+  background-image: url('/FondoRegistro.avif'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   width: 50%;
   display: flex;
   justify-content: center;
@@ -108,13 +112,18 @@ html, body, #root {
 }
 
 .registro-right {
-  width: 50%;
-  background-color: var(--color-secundario);
+  flex: 1;
+  background-image: url('/FondoRegistro.avif'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  animation: fadeInRight 1s ease-in-out;
+  position: relative;
+  padding: 0; 
+  backdrop-filter: blur(2px);
 }
 
 .logo-img {

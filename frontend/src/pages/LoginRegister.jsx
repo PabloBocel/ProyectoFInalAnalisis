@@ -93,9 +93,6 @@ export default function LoginRegister() {
 
       <div className="registro-right">
         <img src="/Logo_Mastercook.png" alt="Logo MasterCook" className="logo-img" />
-        <h1 className="titulo-logo">
-          MASTERCOOK<br /><span>ACADEMY</span>
-        </h1>
       </div>
 
       {/* Onda decorativa visible en todo el ancho */}
