@@ -253,3 +253,39 @@ body {
 .modal-acciones button:first-child {
   background-color: #ccc;
 }
+
+.estado.confirmada { color: green; }
+.estado.cancelada { color: red; }
+.pago-confirmado { font-weight: bold; color: #6B8E23; }
+
+.tabs-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.tabs-container button {
+  background: none;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #666;
+  border-bottom: 3px solid transparent;
+}
+
+.tabs-container .active-tab {
+  color: #D94F4F;
+  border-color: #D94F4F;
+}
+
+.hoverable {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hoverable:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+

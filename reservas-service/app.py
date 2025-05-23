@@ -71,10 +71,11 @@ def crear_reserva():
 
     # Verifica si el usuario ya reservó este taller
     existente = Reserva.query.filter_by(usuario=usuario, taller_id=taller_id).first()
-    if existente:
-        return jsonify({"error": "Ya tienes una reserva para este taller"}), 400
+    if existente and existente.estado != 'cancelada':
+        return jsonify({"error": "Ya tienes una reserva activa para este taller"}), 400
 
-    reserva = Reserva(usuario=usuario, taller_id=taller_id)
+
+    reserva = Reserva(usuario=usuario, taller_id=taller_id, estado="confirmada", pagado=True)
     taller.cupo += 1
 
     db.session.add(reserva)
