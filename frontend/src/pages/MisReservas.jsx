@@ -13,6 +13,8 @@ export default function MisReservas() {
   const [mostrarDetalle, setMostrarDetalle] = useState(false);
   const [reservaSeleccionada, setReservaSeleccionada] = useState(null);
   const [verCanceladas, setVerCanceladas] = useState(false);
+  const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
+  const [reservaPorCancelar, setReservaPorCancelar] = useState(null);
 
   const email = localStorage.getItem('usuarioEmail');
   const navigate = useNavigate();
@@ -46,6 +48,7 @@ export default function MisReservas() {
   const handleCancelar = async (id) => {
     await cancelarReserva(id);
     setReservas(r => r.map(res => res.id === id ? { ...res, estado: 'cancelada' } : res));
+    toast.success('Reserva cancelada exitosamente.');
   };
 
   const reservasMostradas = reservas.filter(r =>
@@ -118,7 +121,8 @@ export default function MisReservas() {
                     <div className="reserva-acciones">
                       <button onClick={(e) => {
                         e.stopPropagation();
-                        handleCancelar(r.id);
+                        setReservaPorCancelar(r);
+                        setMostrarConfirmacion(true);
                       }}>❌ Cancelar</button>
                     </div>
                   )}
@@ -138,6 +142,34 @@ export default function MisReservas() {
               <p><strong>Precio:</strong> Q{precioTaller(reservaSeleccionada.taller_id)}</p>
               <div className="modal-acciones">
                 <button onClick={() => setMostrarDetalle(false)}>Cerrar</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {mostrarConfirmacion && reservaPorCancelar && (
+          <div className="modal-pago" onClick={(e) => e.target.className === 'modal-pago' && setMostrarConfirmacion(false)}>
+            <div className="modal-contenido">
+              <h3>¿Estás seguro de cancelar tu reserva?</h3>
+              <p>Esta acción es irreversible, ten en cuenta lo siguiente:</p>
+              <ul>
+                <li><strong>1. No se reembolsará lo ya cancelado</strong></li>
+                <li><strong>2. No podrás reservar el mismo taller hasta que se publique una fecha nueva para el mismo</strong></li>
+              </ul>
+              <div className="modal-acciones">
+                <button onClick={() => {
+                  setMostrarConfirmacion(false);
+                  setReservaPorCancelar(null);
+                }}>
+                    No, regresar
+                </button>
+                <button onClick={async () => {
+                  await handleCancelar(reservaPorCancelar.id);
+                  setMostrarConfirmacion(false);
+                  setReservaPorCancelar(null);
+                }}>
+                    Sí, estoy de acuerdo
+                </button>
               </div>
             </div>
           </div>

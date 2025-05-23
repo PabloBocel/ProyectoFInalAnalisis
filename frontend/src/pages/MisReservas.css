@@ -251,7 +251,7 @@ body {
 }
 
 .modal-acciones button:first-child {
-  background-color: #ccc;
+  background-color: #D94F4F;
 }
 
 .estado.confirmada { color: green; }
